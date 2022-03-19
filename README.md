@@ -1,8 +1,8 @@
 # This is study project <br>
-# implemented:
+implemented: <br>
    repository, service, dto, api layout
    basic spring security
    exception handler
-   liquibase
-// TODO elasticsearch
-// TODO token auth
+   liquibase<br>
+// TODO elasticsearch<br>
+// TODO token auth<br>
