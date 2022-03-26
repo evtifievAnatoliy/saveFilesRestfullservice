@@ -40,10 +40,10 @@ public class JwtTokenFilter extends GenericFilterBean {
 
         String headerValue = ((HttpServletRequest)req).getHeader("Authorization");
         getBearerToken(headerValue).ifPresent(token-> {
-            String username = getClaimFromToken(token, Claims::getSubject);
+            String username = getClaimFromToken(token.toString(), Claims::getSubject);
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-            if (username.equals(userDetails.getUsername()) && !isJwtExpired(token)) {
+            if (username.equals(userDetails.getUsername()) && !isJwtExpired(token.toString())) {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken.setDetails(
@@ -62,7 +62,7 @@ public class JwtTokenFilter extends GenericFilterBean {
         return Optional.empty();
     }
 
-    private T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
+    private <T>T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
         return claimsResolver.apply(claims);
     }
