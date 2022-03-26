@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-                git url: 'https://github.com/evtifievAnatoliy/saveFilesRestfullservice.git', branch: 'dev'
+                git url: 'https://${env.GIT_TOKEN}@github.com/evtifievAnatoliy/saveFilesRestfullservice.git', branch: 'dev'
                 sh "docker-compose up"
             }
         }
