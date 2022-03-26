@@ -5,11 +5,8 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-                git url: 'https://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@github.com/quantori/prj-bse-gpu.git', branch: 'feature/BSE-729/docker-image-creation'
-                dir('docker/bse-gpu') {
-                    sh "docker-compose up"
-                    sh "docker-compose down"
-                }
+                git url: 'https://github.com/evtifievAnatoliy/saveFilesRestfullservice.git', branch: 'dev'
+                sh "docker-compose up"
             }
         }
         stage('Test') {
@@ -23,4 +20,10 @@ pipeline {
             }
         }
     }
+    post {
+            always {
+                sh "docker-compose down"
+                echo 'Data deleted'
+            }
+        }
 }
