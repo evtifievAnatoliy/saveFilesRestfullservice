@@ -7,11 +7,13 @@ pipeline {
                 echo 'Building..'
                 git url: 'https://${env.GIT_TOKEN}@github.com/evtifievAnatoliy/saveFilesRestfullservice.git', branch: 'dev'
                 sh "docker-compose up"
+                sh "mvn install -DskipTests=true"
             }
         }
         stage('Test') {
             steps {
                 echo 'Testing..'
+                sh "mvn test"
             }
         }
         stage('Deploy') {
@@ -23,7 +25,7 @@ pipeline {
     post {
             always {
                 sh "docker-compose down"
-                echo 'Data deleted'
+                echo 'Temp data is deleted.'
             }
-        }
+    }
 }
